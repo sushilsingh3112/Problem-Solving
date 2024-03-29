@@ -1,44 +1,32 @@
-bool(isPossible(vector<int>boards,int n,int m)){
-    int studentcount=1;
-    int pagesum=0;
-    for(int i=0;i<n;i++){
-        if(pagesum+boards[i]<=mid){
-            pagesum+=boards[i];
+#include <bits/stdc++.h>
+using namespace std;
+int countpainters(vector<int> &boards, int time) {
+    int n = boards.size();
+    int painters = 1;
+    long long boardsPainter = 0;
+    for (int i = 0; i < n; i++) {
+        if (boardsPainter + boards[i] <= time) {
+            boardsPainter += boards[i];
         }
-        else
-        {
-            studentcount++;
-            if(studentcount>m || boards[i]>mid){
-                return false;
-        }
-            pagesum=boards[i];
-        }
-        if(studentcount>m){
-            return false;
+        else {
+            painters++;
+            boardsPainter = boards[i];
         }
     }
-    return true;
+    return painters;
 }
-int findLargestMinDistance(vector<int> &boards, int m)
-{
-    int s=0;
-    int sum=0;
-    for(int i=0;i<=n;i++){
-        sum+=boards[i];
+int findLargestMinDistance(vector<int> &boards, int k) {
+    int i= *max_element(boards.begin(), boards.end());
+    int j = accumulate(boards.begin(), boards.end(), 0);
+    while (i <= j) {
+        int mid = (i + j) / 2;
+        int painters = countpainters(boards, mid);
+        if (painters > k) {
+            i = mid + 1;
+        }
+        else {
+            j = mid - 1;
+        }
     }
-    int e=sum;
-    int ans=-1;
-    int mid=s+(e-s)/2;
-    while(s<=e)
-    {
-        if(isPossible(boards,n,m,mid)){
-            ans=mid;
-            e=mid-1;
-        }
-        else
-        {
-          s=mid+1;
-        }
-        return ans;
-    }
+    return i;
 }
