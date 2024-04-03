@@ -48,6 +48,8 @@ void PrintBottomView(Node*root){
         q.pop();
         Node*frontNode=temp.first;
         int hd=temp.second;
+        //create enty;
+        topNode[hd]=frontNode->data;
         
         if(frontNode->left){
             q.push(make_pair(frontNode->left,hd-1));
